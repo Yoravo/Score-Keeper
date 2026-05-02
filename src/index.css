@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #1a3d2e;
+    color: white;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+    overflow: hidden; /* Prevent body scroll */
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body, #root {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+/* Custom theme variables */
+@theme {
+  --color-forest-dark: #0f2419;
+  --color-forest-base: #1a3d2e;
+  --color-forest-light: #2d5a47;
+}
+
+/* Custom component styles */
+.btn-numpad {
+  @apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
+         text-white font-semibold rounded-lg
+         transition-all duration-150
+         text-xl min-h-12 min-w-12
+         flex items-center justify-center
+         shadow-lg active:shadow-sm active:scale-95
+         select-none cursor-pointer;
+}
+
+.cell-score {
+  @apply bg-forest-dark/50
+         text-center py-3 px-2 text-lg font-semibold
+         transition-colors duration-200
+         min-h-14 flex items-center justify-center
+         border-r border-forest-light/20;
+}
+
+.cell-score:last-child {
+  @apply border-r-0;
+}
+
+.cell-active {
+  @apply bg-emerald-600/40 ring-2 ring-emerald-400 ring-inset;
+}
+
+.cell-header {
+  @apply bg-forest-dark text-white font-bold
+         border-r border-forest-light
+         py-4 px-2 text-center
+         transition-colors duration-200;
+}
+
+.cell-header:last-child {
+  @apply border-r-0;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for table */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #0f2419;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #2d5a47;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #3d6a57;
+}
+
+/* Remove tap highlight on mobile */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Font mono for numbers */
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
