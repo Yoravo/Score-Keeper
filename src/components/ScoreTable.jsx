@@ -22,7 +22,7 @@ function ScoreTable() {
   return (
     <div className="h-full flex flex-col">
       {/* Player Names Header - Sticky & Fixed Height */}
-      <div className="bg-forest-dark border-b-2 border-forest-light flex-shrink-0">
+      <div className="bg-forest-dark border-b-2 border-forest-light shrink-0">
         <div
           className="grid"
           style={{ gridTemplateColumns: `repeat(${players.length}, 1fr)` }}
@@ -83,7 +83,7 @@ function ScoreTable() {
       </div>
 
       {/* Total Row - Fixed Height, Sticks to bottom when space runs out */}
-      <div className="border-t-2 border-emerald-500 flex-shrink-0">
+      <div className="border-t-2 border-emerald-500 shrink-0">
         <div
           className="grid"
           style={{ gridTemplateColumns: `repeat(${players.length}, 1fr)` }}

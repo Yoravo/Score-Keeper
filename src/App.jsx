@@ -24,7 +24,7 @@ function App() {
       }}
     >
       {/* Header - Fixed height */}
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <Header />
       </div>
 
@@ -34,7 +34,7 @@ function App() {
       </main>
 
       {/* Numpad - Fixed at bottom, fixed height */}
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <Numpad />
       </div>
 
