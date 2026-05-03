@@ -9,18 +9,21 @@
     touch-action: manipulation;
     overflow: hidden;
   }
-  
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
-  html, body, #root {
+
+  html,
+  body,
+  #root {
     height: 100%;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     width: 100%;
     overflow: hidden;
-    position: fixed; /* Prevent iOS Safari bottom bar issues */
+    position: fixed;
   }
 }
 
@@ -31,34 +34,77 @@
   --color-forest-light: #2d5a47;
 }
 
-/* Custom component styles - UPDATED FOR RESPONSIVE */
-.btn-numpad {
-  @apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
-         text-white font-semibold rounded-lg
+/* COMPACT NUMPAD BUTTONS */
+.numpad-btn {
+  @apply bg-blue-600 text-white font-semibold rounded
          transition-all duration-150
          flex items-center justify-center
-         shadow-lg active:shadow-sm active:scale-95
-         select-none cursor-pointer;
-  
-  /* Responsive sizing */
-  min-height: 48px;
-  min-width: 48px;
-  aspect-ratio: 1; /* Keep buttons square */
-  font-size: clamp(16px, 4vw, 20px); /* Responsive font */
+         active:scale-95 select-none cursor-pointer;
+
+  min-height: 44px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.btn-numpad:disabled {
-  opacity: 0.7;
+.numpad-btn:active {
+  @apply bg-blue-700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.numpad-btn:disabled {
+  opacity: 0.6;
   pointer-events: none;
 }
 
+.numpad-btn-danger {
+  @apply bg-red-600;
+}
+
+.numpad-btn-danger:active {
+  @apply bg-red-700;
+}
+
+.numpad-btn-warning {
+  @apply bg-orange-600;
+}
+
+.numpad-btn-warning:active {
+  @apply bg-orange-700;
+}
+
+.numpad-btn-purple {
+  @apply bg-purple-600;
+}
+
+.numpad-btn-purple:active {
+  @apply bg-purple-700;
+}
+
+.numpad-btn-gray {
+  @apply bg-gray-600;
+}
+
+.numpad-btn-gray:active {
+  @apply bg-gray-700;
+}
+
+.numpad-btn-success {
+  @apply bg-emerald-600;
+}
+
+.numpad-btn-success:active {
+  @apply bg-emerald-700;
+}
+
+/* TABLE CELLS */
 .cell-score {
   @apply bg-forest-dark/50
-         text-center py-3 px-2 font-semibold
+         text-center py-2 px-1 font-semibold
          transition-colors duration-200
          flex items-center justify-center
          border-r border-forest-light/20;
-  min-height: 48px; /* Touch-friendly minimum */
+  min-height: 44px;
 }
 
 .cell-score:last-child {
@@ -72,7 +118,7 @@
 .cell-header {
   @apply bg-forest-dark text-white font-bold
          border-r border-forest-light
-         py-3 px-2 text-center
+         py-3 px-1 text-center
          transition-colors duration-200;
   min-height: 48px;
 }
@@ -81,14 +127,9 @@
   @apply border-r-0;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar for table */
+/* Custom scrollbar */
 .overflow-y-auto::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
@@ -97,19 +138,21 @@ html {
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background: #2d5a47;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: #3d6a57;
 }
 
-/* Remove tap highlight on mobile */
-button, a, input {
+/* Remove tap highlight */
+button,
+a,
+input {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Font mono for numbers */
-.font-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

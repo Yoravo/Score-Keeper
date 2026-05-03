@@ -25,43 +25,35 @@ function Numpad() {
   };
 
   return (
-    <div className="bg-forest-dark border-t-2 border-forest-light shadow-2xl safe-area-bottom">
-      {/* Numpad Grid - RESPONSIVE */}
-      <div className="p-2 sm:p-3 grid grid-cols-4 gap-2 max-w-md mx-auto">
-        {/* Row 1 */}
-        <button onClick={() => handleNumberClick('1')} className="btn-numpad" disabled={isProcessing}>1</button>
-        <button onClick={() => handleNumberClick('2')} className="btn-numpad" disabled={isProcessing}>2</button>
-        <button onClick={() => handleNumberClick('3')} className="btn-numpad" disabled={isProcessing}>3</button>
-        <button onClick={backspace} className="btn-numpad bg-red-600 hover:bg-red-700 active:bg-red-800">
-          <Delete size={18} className="sm:w-5 sm:h-5" />
+    <div className="bg-forest-dark border-t-2 border-forest-light">
+      {/* Compact 2-Row Numpad Grid */}
+      <div className="grid grid-cols-8 gap-1 p-2">
+        {/* Row 1: 1-5 + Actions */}
+        <button onClick={() => handleNumberClick('1')} className="numpad-btn" disabled={isProcessing}>1</button>
+        <button onClick={() => handleNumberClick('2')} className="numpad-btn" disabled={isProcessing}>2</button>
+        <button onClick={() => handleNumberClick('3')} className="numpad-btn" disabled={isProcessing}>3</button>
+        <button onClick={() => handleNumberClick('4')} className="numpad-btn" disabled={isProcessing}>4</button>
+        <button onClick={() => handleNumberClick('5')} className="numpad-btn" disabled={isProcessing}>5</button>
+        <button onClick={backspace} className="numpad-btn numpad-btn-danger">
+          <Delete size={16} />
+        </button>
+        <button onClick={undo} className="numpad-btn numpad-btn-warning">
+          <Undo size={16} />
+        </button>
+        <button onClick={nextPlayer} className="numpad-btn numpad-btn-purple">
+          <ArrowRight size={16} />
         </button>
 
-        {/* Row 2 */}
-        <button onClick={() => handleNumberClick('4')} className="btn-numpad" disabled={isProcessing}>4</button>
-        <button onClick={() => handleNumberClick('5')} className="btn-numpad" disabled={isProcessing}>5</button>
-        <button onClick={() => handleNumberClick('6')} className="btn-numpad" disabled={isProcessing}>6</button>
-        <button onClick={undo} className="btn-numpad bg-orange-600 hover:bg-orange-700 active:bg-orange-800">
-          <Undo size={18} className="sm:w-5 sm:h-5" />
-        </button>
-
-        {/* Row 3 */}
-        <button onClick={() => handleNumberClick('7')} className="btn-numpad" disabled={isProcessing}>7</button>
-        <button onClick={() => handleNumberClick('8')} className="btn-numpad" disabled={isProcessing}>8</button>
-        <button onClick={() => handleNumberClick('9')} className="btn-numpad" disabled={isProcessing}>9</button>
-        <button onClick={nextPlayer} className="btn-numpad bg-purple-600 hover:bg-purple-700 active:bg-purple-800">
-          <ArrowRight size={18} className="sm:w-5 sm:h-5" />
-        </button>
-
-        {/* Row 4 */}
-        <button onClick={toggleNegative} className="btn-numpad bg-gray-600 hover:bg-gray-700 active:bg-gray-800">
-          ±
-        </button>
-        <button onClick={() => handleNumberClick('0')} className="btn-numpad" disabled={isProcessing}>0</button>
-        <button onClick={clearInput} className="btn-numpad bg-gray-600 hover:bg-gray-700 active:bg-gray-800">
-          C
-        </button>
-        <button onClick={enterScore} className="btn-numpad bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800">
-          <CornerDownLeft size={18} className="sm:w-5 sm:h-5" />
+        {/* Row 2: 6-0 + Actions */}
+        <button onClick={() => handleNumberClick('6')} className="numpad-btn" disabled={isProcessing}>6</button>
+        <button onClick={() => handleNumberClick('7')} className="numpad-btn" disabled={isProcessing}>7</button>
+        <button onClick={() => handleNumberClick('8')} className="numpad-btn" disabled={isProcessing}>8</button>
+        <button onClick={() => handleNumberClick('9')} className="numpad-btn" disabled={isProcessing}>9</button>
+        <button onClick={() => handleNumberClick('0')} className="numpad-btn" disabled={isProcessing}>0</button>
+        <button onClick={toggleNegative} className="numpad-btn numpad-btn-gray">±</button>
+        <button onClick={clearInput} className="numpad-btn numpad-btn-gray">C</button>
+        <button onClick={enterScore} className="numpad-btn numpad-btn-success">
+          <CornerDownLeft size={16} />
         </button>
       </div>
     </div>

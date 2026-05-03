@@ -16,17 +16,28 @@ function App() {
 
   return (
     <div
-      className="h-screen w-screen flex flex-col overflow-hidden"
+      className="h-full flex flex-col overflow-hidden"
       style={{
         fontFamily,
         backgroundColor: bgColor,
+        height: "100dvh",
       }}
     >
-      <Header />
-      <main className="flex-1 overflow-hidden">
+      {/* Header - Fixed height */}
+      <div className="flex-shrink-0">
+        <Header />
+      </div>
+
+      {/* Score Table Container - Takes available space, allows Total to flow down */}
+      <main className="flex-1 min-h-0 flex flex-col overflow-hidden">
         <ScoreTable />
       </main>
-      <Numpad />
+
+      {/* Numpad - Fixed at bottom, fixed height */}
+      <div className="flex-shrink-0">
+        <Numpad />
+      </div>
+
       <Menu />
     </div>
   );

@@ -16,14 +16,13 @@ function ScoreTable() {
   const maxRounds = getMaxRounds();
   const rounds = Math.max(maxRounds + 1, settings.maxVisibleRows);
 
-  // Get lowest/highest players
   const lowestPlayer = settings.highlightScores ? getLowestPlayer() : null;
   const highestPlayer = settings.highlightScores ? getHighestPlayer() : null;
 
   return (
     <div className="h-full flex flex-col">
-      {/* Player Names Header */}
-      <div className="bg-forest-dark border-b-2 border-forest-light">
+      {/* Player Names Header - Sticky & Fixed Height */}
+      <div className="bg-forest-dark border-b-2 border-forest-light flex-shrink-0">
         <div
           className="grid"
           style={{ gridTemplateColumns: `repeat(${players.length}, 1fr)` }}
@@ -34,7 +33,7 @@ function ScoreTable() {
               type="text"
               value={player.name}
               onChange={(e) => updatePlayerName(idx, e.target.value)}
-              className="w-full bg-transparent cursor-pointer transition-all focus:outline-none text-center font-bold border-r border-forest-light py-4 px-2"
+              className="w-full bg-transparent cursor-pointer transition-all focus:outline-none text-center font-bold border-r border-forest-light py-3 px-1"
               style={{
                 borderLeftColor: player.color,
                 borderLeftWidth: "1px",
@@ -46,8 +45,8 @@ function ScoreTable() {
         </div>
       </div>
 
-      {/* Scrollable Score Rows */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Scrollable Score Rows - Shrinks when space runs out */}
+      <div className="flex-1 overflow-y-auto min-h-0">
         <div>
           {Array.from({ length: rounds }).map((_, roundIdx) => (
             <div
@@ -64,11 +63,7 @@ function ScoreTable() {
                 return (
                   <div
                     key={player.id}
-                    className={`cursor-pointer bg-forest-dark/50 text-center py-3 px-2 font-semibold transition-colors duration-200 min-h-14 flex items-center justify-center border-r border-forest-light/20 ${
-                      isActive
-                        ? "bg-emerald-600/40 ring-2 ring-emerald-400 ring-inset"
-                        : ""
-                    }`}
+                    className={`cell-score cursor-pointer ${isActive ? "cell-active" : ""}`}
                     onClick={() => setActiveCell(playerIdx, roundIdx)}
                     style={{ fontSize: `${settings.fontSize}px` }}
                   >
@@ -87,8 +82,8 @@ function ScoreTable() {
         </div>
       </div>
 
-      {/* Total Row - Sticky Bottom with Highlight */}
-      <div className="border-t-2 border-emerald-500">
+      {/* Total Row - Fixed Height, Sticks to bottom when space runs out */}
+      <div className="border-t-2 border-emerald-500 flex-shrink-0">
         <div
           className="grid"
           style={{ gridTemplateColumns: `repeat(${players.length}, 1fr)` }}
@@ -98,25 +93,25 @@ function ScoreTable() {
             const isLowest = lowestPlayer && lowestPlayer.index === idx;
             const isHighest = highestPlayer && highestPlayer.index === idx;
 
-            let bgColor = "#059669"; // default emerald-700
+            let bgColor = "#059669";
 
             if (settings.highlightScores) {
               if (isLowest && lowestPlayer.total !== highestPlayer.total) {
-                bgColor = "#ef4444"; // red-500
+                bgColor = "#ef4444";
               } else if (
                 isHighest &&
                 lowestPlayer.total !== highestPlayer.total
               ) {
-                bgColor = "#fbbf24"; // amber-400 (gold)
+                bgColor = "#fbbf24";
               }
             }
 
             return (
               <div
                 key={player.id}
-                className="text-center py-4 px-2 font-bold transition-colors duration-300"
+                className="text-center py-3 px-1 font-bold transition-colors duration-300"
                 style={{
-                  fontSize: `${Math.min(settings.fontSize + 4, 34)}px`,
+                  fontSize: `${Math.min(settings.fontSize + 2, 28)}px`,
                   backgroundColor: bgColor,
                 }}
               >
