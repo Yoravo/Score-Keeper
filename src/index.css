@@ -7,7 +7,7 @@
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     touch-action: manipulation;
-    overflow: hidden; /* Prevent body scroll */
+    overflow: hidden;
   }
   
   * {
@@ -18,7 +18,9 @@
   
   html, body, #root {
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    position: fixed; /* Prevent iOS Safari bottom bar issues */
   }
 }
 
@@ -29,23 +31,34 @@
   --color-forest-light: #2d5a47;
 }
 
-/* Custom component styles */
+/* Custom component styles - UPDATED FOR RESPONSIVE */
 .btn-numpad {
   @apply bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
          text-white font-semibold rounded-lg
          transition-all duration-150
-         text-xl min-h-12 min-w-12
          flex items-center justify-center
          shadow-lg active:shadow-sm active:scale-95
          select-none cursor-pointer;
+  
+  /* Responsive sizing */
+  min-height: 48px;
+  min-width: 48px;
+  aspect-ratio: 1; /* Keep buttons square */
+  font-size: clamp(16px, 4vw, 20px); /* Responsive font */
+}
+
+.btn-numpad:disabled {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .cell-score {
   @apply bg-forest-dark/50
-         text-center py-3 px-2 text-lg font-semibold
+         text-center py-3 px-2 font-semibold
          transition-colors duration-200
-         min-h-14 flex items-center justify-center
+         flex items-center justify-center
          border-r border-forest-light/20;
+  min-height: 48px; /* Touch-friendly minimum */
 }
 
 .cell-score:last-child {
@@ -59,8 +72,9 @@
 .cell-header {
   @apply bg-forest-dark text-white font-bold
          border-r border-forest-light
-         py-4 px-2 text-center
+         py-3 px-2 text-center
          transition-colors duration-200;
+  min-height: 48px;
 }
 
 .cell-header:last-child {
@@ -74,7 +88,7 @@ html {
 
 /* Custom scrollbar for table */
 .overflow-y-auto::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
@@ -91,7 +105,7 @@ html {
 }
 
 /* Remove tap highlight on mobile */
-button, a {
+button, a, input {
   -webkit-tap-highlight-color: transparent;
 }
 
