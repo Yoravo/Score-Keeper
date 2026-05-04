@@ -406,7 +406,12 @@ const useScoreStore = create(
 
       sampleGame: () => {
         set({
-          players: [...SAMPLE_PLAYERS],
+          players: [
+            { id: 1, name: "Han", color: "#059669", scores: [10, -5, 15, 20] },
+            { id: 2, name: "Chewie", color: "#0891b2", scores: [15, -10, 20, 25] },
+            { id: 3, name: "Luke", color: "#7c3aed", scores: [20, -15, 25, 30] },
+            { id: 4, name: "Leia", color: "#dc2626", scores: [25, -20, 30, 35] },
+          ],
           currentPlayerIndex: 0,
           currentRoundIndex: 0,
           currentInput: "",
