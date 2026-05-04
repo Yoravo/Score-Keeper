@@ -315,6 +315,22 @@ const useScoreStore = create(
         });
       },
 
+      // Reset Player Scores by Column
+      resetPlayerScores: (playerIndex) => {
+        set((state) => {
+          const player = state.players[playerIndex];
+          if (!player) return state;
+
+          return {
+            players: state.players.map((p, idx) =>
+              idx === playerIndex ? { ...p, scores: [] } : p,
+            ),
+            currentInput: "",
+            history: [], // Optional: clear history
+          };
+        });
+      },
+
       undo: () => {
         set((state) => {
           const { currentPlayerIndex, currentRoundIndex, players } = state;

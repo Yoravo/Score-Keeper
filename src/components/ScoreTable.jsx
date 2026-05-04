@@ -1,3 +1,4 @@
+import { useState, useRef } from "react";
 import useScoreStore from "../store/useScoreStore";
 
 function ScoreTable() {
@@ -9,6 +10,7 @@ function ScoreTable() {
   const setActiveCell = useScoreStore((state) => state.setActiveCell);
   const currentInput = useScoreStore((state) => state.currentInput);
   const updatePlayerName = useScoreStore((state) => state.updatePlayerName);
+  const resetPlayerScores = useScoreStore((state) => state.resetPlayerScores);
   const settings = useScoreStore((state) => state.settings);
   const getLowestPlayer = useScoreStore((state) => state.getLowestPlayer);
   const getHighestPlayer = useScoreStore((state) => state.getHighestPlayer);
@@ -19,33 +21,82 @@ function ScoreTable() {
   const lowestPlayer = settings.highlightScores ? getLowestPlayer() : null;
   const highestPlayer = settings.highlightScores ? getHighestPlayer() : null;
 
+  // Long press handling
+  const longPressTimerRef = useRef(null);
+  const [isLongPressing, setIsLongPressing] = useState(false);
+
+  const handleLongPressStart = (playerIndex) => {
+    // Clear any existing timer
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+    }
+
+    setIsLongPressing(true);
+
+    // Set timer for long press
+    longPressTimerRef.current = setTimeout(() => {
+      const player = players[playerIndex];
+      const hasScores = player.scores.some(
+        (s) => s !== undefined && s !== null && s !== 0,
+      );
+
+      if (hasScores) {
+        const confirmed = confirm(`Reset all scores for ${player.name}?`);
+        if (confirmed) {
+          resetPlayerScores(playerIndex);
+        }
+      } else {
+        alert(`${player.name} has no scores to reset.`);
+      }
+
+      setIsLongPressing(false);
+    }, 600); // 600ms for long press
+  };
+
+  const handleLongPressEnd = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+    setIsLongPressing(false);
+  };
+
   return (
     <div className="h-full flex flex-col">
-      {/* Player Names Header - Sticky & Fixed Height */}
+      {/* Player Names Header */}
       <div className="bg-forest-dark border-b-2 border-forest-light shrink-0">
         <div
           className="grid"
           style={{ gridTemplateColumns: `repeat(${players.length}, 1fr)` }}
         >
           {players.map((player, idx) => (
-            <input
-              key={player.id}
-              type="text"
-              value={player.name}
-              onChange={(e) => updatePlayerName(idx, e.target.value)}
-              className="w-full bg-transparent cursor-pointer transition-all focus:outline-none text-center font-bold border-r border-forest-light py-3 px-1"
-              style={{
-                borderLeftColor: player.color,
-                borderLeftWidth: "1px",
-                fontSize: `${settings.fontSize}px`,
-              }}
-              placeholder={`Player ${idx + 1}`}
-            />
+            <div key={player.id} className="relative">
+              <input
+                type="text"
+                value={player.name}
+                onChange={(e) => updatePlayerName(idx, e.target.value)}
+                onTouchStart={() => handleLongPressStart(idx)}
+                onTouchEnd={handleLongPressEnd}
+                onTouchMove={handleLongPressEnd}
+                onMouseDown={() => handleLongPressStart(idx)}
+                onMouseUp={handleLongPressEnd}
+                onMouseLeave={handleLongPressEnd}
+                className={`w-full bg-transparent cursor-pointer transition-all focus:outline-none text-center font-bold border-r border-forest-light py-3 px-1 ${
+                  isLongPressing ? "scale-95" : ""
+                }`}
+                style={{
+                  borderLeftColor: player.color,
+                  borderLeftWidth: "1px",
+                  fontSize: `${settings.fontSize}px`,
+                }}
+                placeholder={`Player ${idx + 1}`}
+              />
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Scrollable Score Rows - Shrinks when space runs out */}
+      {/* Scrollable Score Rows */}
       <div className="flex-1 overflow-y-auto min-h-0">
         <div>
           {Array.from({ length: rounds }).map((_, roundIdx) => (
@@ -82,7 +133,7 @@ function ScoreTable() {
         </div>
       </div>
 
-      {/* Total Row - Fixed Height, Sticks to bottom when space runs out */}
+      {/* Total Row - Sticky Bottom */}
       <div className="border-t-2 border-emerald-500 shrink-0">
         <div
           className="grid"
