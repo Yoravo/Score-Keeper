@@ -308,6 +308,14 @@ function Menu() {
             <p className="text-xs text-gray-500 text-center mt-1">
               Coming soon
             </p>
+
+            {/* Pro Tip */}
+            <div className="mt-6 p-3 bg-forest-base rounded-lg border border-forest-light">
+              <p className="text-xs text-gray-400 text-center">
+                💡 <span className="font-semibold">Tip:</span> Long press player
+                name to reset their scores
+              </p>
+            </div>
           </section>
 
           {/* Divider */}
